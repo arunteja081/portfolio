@@ -35,9 +35,14 @@ jobs:
           VITE_CONTACT_EMAIL: ${{ secrets.VITE_CONTACT_EMAIL }}
           VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Copy build to docs folder
+        run: |
+          rm -rf docs
+          cp -r dist docs
+
+      - name: Commit and push docs
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+          commit_message: 'deploy: update GitHub Pages site [skip ci]'
+          file_pattern: docs/**
+          branch: main
