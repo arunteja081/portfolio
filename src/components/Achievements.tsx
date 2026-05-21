@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+import { useRevealInView } from '../hooks/useRevealInView'
 import { ACHIEVEMENTS_DATA } from '../data/constants'
 
 const Counter = ({ target, suffix, active }: { target: number; suffix: string; active: boolean }) => {
@@ -27,17 +27,17 @@ const Counter = ({ target, suffix, active }: { target: number; suffix: string; a
 }
 
 const Achievements = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 })
+  const { ref, inView } = useRevealInView()
 
   return (
-    <section id="achievements" className="section" style={{ background: '#fff' }}>
+    <section id="achievements" ref={ref} className="section" style={{ background: '#fff' }}>
       <div className="container-xl">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          style={{ textAlign: 'center', marginBottom: 56 }}
+          className="section-intro"
+          style={{ textAlign: 'center' }}
         >
           <span className="badge badge-emerald" style={{ marginBottom: 16 }}>Results</span>
           <h2 className="font-display" style={{
@@ -51,35 +51,32 @@ const Achievements = () => {
           </p>
         </motion.div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-          gap: 16,
-        }}>
+        <div className="achievements-grid">
           {ACHIEVEMENTS_DATA.map((item, i) => (
             <motion.div
               key={item.label}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="card"
-              style={{ padding: '32px 24px', textAlign: 'center' }}
+              className="card achievement-card"
             >
-              <div style={{
+              <div className="achievement-icon" style={{
                 width: 48, height: 48, borderRadius: 12,
                 background: 'var(--bg-muted)', border: '1px solid var(--bg-accent-soft)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1.5rem', marginLeft: 'auto', marginRight: 'auto', marginBottom: 16,
+                fontSize: '1.5rem', marginBottom: 16, flexShrink: 0,
               }}>
                 {item.icon}
               </div>
-              <div className="font-display" style={{
+              <div className="font-display achievement-value" style={{
                 fontSize: '2.25rem', fontWeight: 800, color: 'var(--coral)',
                 lineHeight: 1, marginBottom: 8, letterSpacing: '-0.03em',
               }}>
                 <Counter target={item.value} suffix={item.suffix} active={inView} />
               </div>
-              <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>{item.label}</div>
+              <div className="achievement-label" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                {item.label}
+              </div>
             </motion.div>
           ))}
         </div>

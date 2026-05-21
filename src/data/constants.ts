@@ -23,9 +23,9 @@ export interface ExperienceItem {
 export interface Project {
   title: string
   description: string
+  role: string
   features: string[]
   technologies: string[]
-  gradient: string
   icon: string
 }
 
@@ -156,69 +156,65 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
 
 export const PROJECTS_DATA: Project[] = [
   {
-    title: 'AI-Powered Business Tool',
+    title: 'AI Business Automation Platform',
+    role: 'Full stack development & integration',
     description:
-      'A custom AI automation platform built for a client to streamline their internal workflows, automate customer queries, and generate business reports — saving 20+ hours per week.',
+      'Production platform I built at my organization to automate internal workflows, customer Q&A, and reporting. Codebase and UI are confidential — this summarizes my contribution.',
     features: [
-      'OpenAI GPT-4 integration for intelligent Q&A',
-      'Automated report generation & email delivery',
-      'Custom business dashboard with analytics',
-      'Workflow automation with Python & FastAPI',
-      'Real-time data processing & storage',
+      'OpenAI API integration for intelligent Q&A',
+      'Automated reports & email delivery pipelines',
+      'Analytics dashboard for business teams',
+      'FastAPI services with PostgreSQL',
     ],
     technologies: ['FastAPI', 'Python', 'OpenAI API', 'React', 'PostgreSQL', 'Docker'],
-    gradient: 'from-violet-600 via-purple-600 to-indigo-600',
     icon: '🤖',
   },
   {
     title: 'E-Commerce Web Platform',
+    role: 'End-to-end web engineering',
     description:
-      'A full-featured e-commerce website built for a retail client with product management, payment gateway integration, SEO optimization, and mobile-first responsive design.',
+      'Full retail web platform delivered in a professional environment. I owned frontend, integrations, and performance — product name and assets are not public.',
     features: [
-      'Mobile-first responsive design',
-      'Razorpay / Stripe payment integration',
-      'SEO-optimized product pages',
-      'Admin dashboard for inventory management',
-      'Blazing-fast load time (< 2s LCP)',
+      'Mobile-first storefront & admin flows',
+      'Payment gateway integration',
+      'SEO-focused product pages',
+      'Inventory & order management UI',
     ],
-    technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Tailwind CSS', 'Stripe'],
-    gradient: 'from-cyan-600 via-blue-600 to-indigo-600',
+    technologies: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Tailwind CSS'],
     icon: '🛒',
   },
   {
-    title: 'Granite Visualization App',
+    title: 'Room Visualization Mobile App',
+    role: 'React Native & API integration',
     description:
-      'An AI-powered room visualization mobile app allowing customers to see how granite & marble surfaces look in their spaces in real-time, boosting client conversion rates.',
+      'Cross-platform app for real-time product visualization in customer spaces. Built and shipped in production; details shared only under NDA.',
     features: [
-      'Real-time AI room visualization',
-      'Cross-platform mobile app (iOS & Android)',
-      'Redux state management architecture',
-      'RESTful API backend integration',
-      'Production deployment & monitoring',
+      'Real-time visualization experience',
+      'iOS & Android with React Native',
+      'Redux architecture & API layer',
+      'Production builds & release support',
     ],
-    technologies: ['React Native', 'Redux', 'TypeScript', 'Node.js', 'PostgreSQL'],
-    gradient: 'from-indigo-600 via-purple-600 to-pink-600',
-    icon: '🎨',
+    technologies: ['React Native', 'Redux', 'TypeScript', 'REST APIs', 'PostgreSQL'],
+    icon: '📱',
   },
   {
-    title: 'SEO Business Website',
+    title: 'High-Performance Business Website',
+    role: 'Frontend, SEO & performance',
     description:
-      'A high-performance, SEO-optimized business website for a digital marketing agency, achieving top Google rankings within 3 months with Core Web Vitals score of 95+.',
+      'Marketing site optimized for search and Core Web Vitals. I implemented structure, speed, and analytics — hosted and maintained in a private org environment.',
     features: [
-      'Core Web Vitals score 95+',
-      'Structured data & schema markup',
-      'Blog & content management system',
-      'Google Analytics & Search Console setup',
-      'Lead generation & contact forms',
+      'Core Web Vitals & technical SEO',
+      'Structured data & metadata',
+      'Content-ready layout system',
+      'Analytics & lead capture forms',
     ],
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Google Analytics', 'Vercel'],
-    gradient: 'from-emerald-600 via-teal-600 to-cyan-600',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Technical SEO'],
     icon: '📈',
   },
 ]
 
 export const ACHIEVEMENTS_DATA: Achievement[] = [
-  { label: 'Client Projects Delivered', value: 20, suffix: '+', icon: '🏆' },
+  { label: 'Production Projects Shipped', value: 20, suffix: '+', icon: '🏆' },
   { label: 'Websites Launched', value: 15, suffix: '+', icon: '🌐' },
   { label: 'AI Tools Built', value: 5, suffix: '+', icon: '🤖' },
   { label: 'Client Satisfaction', value: 98, suffix: '%', icon: '⭐' },

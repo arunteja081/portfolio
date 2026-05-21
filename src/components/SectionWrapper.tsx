@@ -1,5 +1,6 @@
-import { useRef, ReactNode } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { ReactNode } from 'react'
+import { motion } from 'framer-motion'
+import { useRevealInView } from '../hooks/useRevealInView'
 
 interface SectionWrapperProps {
   children: ReactNode
@@ -8,13 +9,12 @@ interface SectionWrapperProps {
 }
 
 const SectionWrapper = ({ children, id, className = '' }: SectionWrapperProps) => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { ref: sectionRef, inView: isInView } = useRevealInView()
 
   return (
     <section
       id={id}
-      ref={ref}
+      ref={sectionRef}
       className={`relative py-20 md:py-28 ${className}`}
     >
       <motion.div

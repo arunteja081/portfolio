@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer style={{ background: '#fff', borderTop: '1px solid var(--border-light)' }}>
       <div className="container-xl" style={{ padding: '40px 24px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
+        <div className="footer-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
           {/* Logo */}
           <a href="#home" onClick={e => { e.preventDefault(); scrollTo('home') }}
             style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
@@ -22,7 +22,7 @@ const Footer = () => {
           </a>
 
           {/* Quick links */}
-          <div style={{ display: 'flex', gap: 4 }}>
+          <div className="footer-nav" style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
             {['about', 'projects', 'skills', 'experience', 'contact'].map(id => (
               <button key={id} onClick={() => scrollTo(id)}
                 style={{
@@ -63,7 +63,7 @@ const Footer = () => {
 
         <div style={{ height: 1, background: 'var(--bg-muted)', margin: '24px 0' }} />
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+        <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
           <p style={{ fontSize: '0.8125rem', color: 'var(--text-faint)' }}>
             © {year} Arun Teja Vemunuri. All rights reserved.
           </p>

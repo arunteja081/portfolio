@@ -1,19 +1,19 @@
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+import { useRevealInView } from '../hooks/useRevealInView'
 import { EXPERIENCE_DATA } from '../data/constants'
 
 const Experience = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
+  const { ref, inView } = useRevealInView()
 
   return (
-    <section id="experience" className="section" style={{ background: 'var(--bg-page)' }}>
+    <section id="experience" ref={ref} className="section" style={{ background: 'var(--bg-page)' }}>
       <div className="container-xl">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          style={{ textAlign: 'center', marginBottom: 56 }}
+          className="section-intro"
+          style={{ textAlign: 'center' }}
         >
           <span className="badge badge-cyan" style={{ marginBottom: 16 }}>Experience</span>
           <h2 className="font-display" style={{
@@ -34,7 +34,7 @@ const Experience = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="card"
+              className="card card-pad-responsive"
               style={{ padding: '28px 32px' }}
             >
               {/* Top row */}

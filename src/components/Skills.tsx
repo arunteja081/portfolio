@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+import { useRevealInView } from '../hooks/useRevealInView'
+import { SKILL_ICONS } from '../data/skillIcons'
 
 const techGroups = [
   {
@@ -33,17 +34,17 @@ const techGroups = [
 ]
 
 const Skills = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
+  const { ref, inView } = useRevealInView()
 
   return (
-    <section id="skills" className="section" style={{ background: '#fff' }}>
+    <section id="skills" ref={ref} className="section" style={{ background: '#fff' }}>
       <div className="container-xl">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          style={{ textAlign: 'center', marginBottom: 56 }}
+          className="section-intro"
+          style={{ textAlign: 'center' }}
         >
           <span className="badge badge-violet" style={{ marginBottom: 16 }}>Tech Stack</span>
           <h2 className="font-display" style={{
@@ -52,7 +53,7 @@ const Skills = () => {
           }}>
             Skills & Technologies
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.7 }}>
+          <p className="text-body" style={{ maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
             Modern, production-tested tools I use to build reliable applications end-to-end.
           </p>
         </motion.div>
@@ -62,19 +63,22 @@ const Skills = () => {
             <motion.div
               key={group.category}
               initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
+              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
               transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="skill-row"
               style={{
                 display: 'flex', alignItems: 'flex-start', gap: 24,
                 padding: '22px 28px',
                 background: '#FFFFFF', border: '1px solid var(--border-light)', borderRadius: 14,
               }}
             >
-              {/* Category label */}
-              <div style={{
-                minWidth: 140, paddingTop: 2,
-                display: 'flex', alignItems: 'center', gap: 8,
-              }}>
+              <div
+                className="skill-category-label"
+                style={{
+                  minWidth: 140, paddingTop: 2,
+                  display: 'flex', alignItems: 'center', gap: 8,
+                }}
+              >
                 <div style={{
                   width: 8, height: 8, borderRadius: '50%',
                   background: group.color, flexShrink: 0,
@@ -86,27 +90,31 @@ const Skills = () => {
                 </span>
               </div>
 
-              {/* Divider */}
-              <div style={{ width: 1, alignSelf: 'stretch', background: 'var(--bg-muted)', flexShrink: 0 }} />
+              <div className="skill-row-divider" style={{ width: 1, alignSelf: 'stretch', background: 'var(--bg-muted)', flexShrink: 0 }} />
 
-              {/* Skill pills */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, flex: 1 }}>
-                {group.skills.map(skill => (
-                  <span
-                    key={skill}
-                    style={{
-                      padding: '6px 14px',
-                      background: group.bg,
-                      border: `1px solid ${group.border}`,
-                      borderRadius: 8,
-                      fontSize: '0.875rem',
-                      fontWeight: 500,
-                      color: group.color,
-                    }}
-                  >
-                    {skill}
-                  </span>
-                ))}
+                {group.skills.map(skill => {
+                  const meta = SKILL_ICONS[skill]
+                  const Icon = meta?.Icon
+                  return (
+                    <span
+                      key={skill}
+                      className="skill-pill"
+                      style={{
+                        background: group.bg,
+                        border: `1px solid ${group.border}`,
+                        color: 'var(--text-body)',
+                      }}
+                    >
+                      {Icon && (
+                        <span className="skill-pill-icon" style={{ color: meta.color }} aria-hidden>
+                          <Icon />
+                        </span>
+                      )}
+                      {skill}
+                    </span>
+                  )
+                })}
               </div>
             </motion.div>
           ))}

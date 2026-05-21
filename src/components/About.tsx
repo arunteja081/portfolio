@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+import { useRevealInView } from '../hooks/useRevealInView'
 
 const services = [
   {
@@ -48,18 +48,18 @@ const pillars = [
 ]
 
 const About = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
+  const { ref, inView } = useRevealInView()
 
   return (
-    <section id="about" className="section" style={{ background: '#fff' }}>
+    <section id="about" ref={ref} className="section" style={{ background: '#fff' }}>
       <div className="container-xl">
         {/* Section header */}
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          style={{ textAlign: 'center', marginBottom: 56 }}
+          className="section-intro"
+          style={{ textAlign: 'center' }}
         >
           <span className="badge badge-violet" style={{ marginBottom: 16 }}>Services</span>
           <h2 className="font-display" style={{
@@ -74,11 +74,15 @@ const About = () => {
         </motion.div>
 
         {/* Services grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: 20, marginBottom: 64,
-        }}>
+        <div
+          className="services-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+            gap: 20,
+            marginBottom: 48,
+          }}
+        >
           {services.map((s, i) => (
             <motion.div
               key={s.title}
@@ -114,16 +118,19 @@ const About = () => {
         </div>
 
         {/* Why work with me */}
-        <div className="card" style={{ padding: '40px 40px 36px', marginBottom: 32 }}>
+        <div className="card card-pad-lg" style={{ padding: '40px 40px 36px', marginBottom: 32 }}>
           <h3 className="font-display" style={{
             fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)',
             textAlign: 'center', marginBottom: 36,
           }}>Why Clients Choose Me</h3>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: 32,
-          }}>
+          <div
+            className="pillars-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 200px), 1fr))',
+              gap: 32,
+            }}
+          >
             {pillars.map((p, i) => (
               <motion.div
                 key={p.title}

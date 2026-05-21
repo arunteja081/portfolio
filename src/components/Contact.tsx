@@ -1,6 +1,6 @@
 import { useState, FormEvent, FocusEvent } from 'react'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+import { useRevealInView } from '../hooks/useRevealInView'
 import { SOCIAL_LINKS } from '../data/constants'
 import { sendContactForm } from '../lib/sendContactForm'
 import {
@@ -15,7 +15,7 @@ import {
 const emptyForm = { name: '', email: '', service: '', message: '' }
 
 const Contact = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
+  const { ref, inView } = useRevealInView()
   const [form, setForm] = useState(emptyForm)
   const [errors, setErrors] = useState<ContactFormErrors>({})
   const [touched, setTouched] = useState<Partial<Record<ContactFormField, boolean>>>({})
@@ -100,14 +100,14 @@ const Contact = () => {
       : null
 
   return (
-    <section id="contact" className="section" style={{ background: '#F8FAFC' }}>
+    <section id="contact" ref={ref} className="section" style={{ background: '#F8FAFC' }}>
       <div className="container-xl">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          style={{ textAlign: 'center', marginBottom: 56 }}
+          className="section-intro"
+          style={{ textAlign: 'center' }}
         >
           <span className="badge badge-violet" style={{ marginBottom: 16 }}>Contact</span>
           <h2 className="font-display" style={{
@@ -128,7 +128,7 @@ const Contact = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
           >
-            <div className="card" style={{ padding: '24px' }}>
+            <div className="card contact-info-card" style={{ padding: '24px' }}>
               <h4 className="font-display" style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0F172A', marginBottom: 16 }}>
                 Get in touch
               </h4>
@@ -200,8 +200,8 @@ const Contact = () => {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <form onSubmit={submit} noValidate className="card" style={{ padding: '32px 32px 28px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+            <form onSubmit={submit} noValidate className="card contact-form-card" style={{ padding: '32px 32px 28px' }}>
+              <div className="contact-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: '#374151', marginBottom: 6 }} htmlFor="c-name">Full Name *</label>
                   <input
@@ -309,11 +309,6 @@ const Contact = () => {
           </motion.div>
         </motion.div>
 
-        <style>{`
-          @media (max-width: 768px) {
-            #contact .contact-grid { grid-template-columns: 1fr !important; }
-          }
-        `}</style>
       </div>
     </section>
   )

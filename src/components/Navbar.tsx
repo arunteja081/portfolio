@@ -23,6 +23,11 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
+
   const scrollTo = (href: string) => {
     document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' })
     setMobileOpen(false)

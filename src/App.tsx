@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 function App() {
   return (
     <AnimatePresence>
+      <MotionConfig reducedMotion="user">
       <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
         <Navbar />
         <main>
@@ -25,6 +26,7 @@ function App() {
         </main>
         <Footer />
       </div>
+      </MotionConfig>
     </AnimatePresence>
   )
 }
